@@ -20,8 +20,18 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Middleware - CORS Configuration (UPDATED)
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:5000',
+    'https://dailybloging.fun',
+    'https://www.dailybloging.fun'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -52,7 +62,6 @@ app.use((err, req, res, next) => {
     stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
   });
 });
-
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -103,4 +112,3 @@ mongoose.connect(MONGODB_URI)
   });
 
 export default app;
-
