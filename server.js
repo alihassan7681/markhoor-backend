@@ -21,12 +21,14 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // Middleware - CORS Configuration (UPDATED)
+// Middleware - CORS Configuration (UPDATED)
 app.use(cors({
   origin: [
     'http://localhost:5173',
     'http://localhost:5000',
     'https://dailybloging.fun',
-    'https://www.dailybloging.fun'
+    'https://www.dailybloging.fun',
+    'https://markhoor-backend.onrender.com'  // ✅ Backend URL add karein
   ],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
