@@ -23,19 +23,20 @@ const app = express();
 // Middleware - CORS Configuration (UPDATED)
 // Middleware - CORS Configuration (UPDATED)
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'http://localhost:5000',
-    'https://dailybloging.fun',
-    'https://www.dailybloging.fun',
-    'https://markhoor-backend.onrender.com'  // ✅ Backend URL add karein
-  ],
+  origin: true, // Allow all origins for debugging
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Add COOP/COEP headers to allow popups
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.header("Cross-Origin-Embedder-Policy", "unsafe-none");
+  next();
+});
 
 // Serve uploaded files with proper headers
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
